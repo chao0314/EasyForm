@@ -1,6 +1,6 @@
 # easyform
 
-> A Vue.js project
+> A Vue.utils project
 
 ## Build Setup
 

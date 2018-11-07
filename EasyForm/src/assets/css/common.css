@@ -4,10 +4,13 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  font-size: 12px;
 }
 html{
   font-size: 100px;
+  height: 100%;
 }
 body{
   font-size: 16px;
+  height: 100%;
 }

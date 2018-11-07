@@ -3,16 +3,16 @@
 
 module.exports = {
   'default e2e tests': function (browser) {
-    // automatically uses dev Server port from /config.index.js
+    // automatically uses dev Server port from /config.index.utils
     // default: http://localhost:8080
-    // see nightwatch.conf.js
+    // see nightwatch.conf.utils
     const devServer = browser.globals.devServerURL
 
     browser
       .url(devServer)
       .waitForElementVisible('#app', 5000)
       .assert.elementPresent('.hello')
-      .assert.containsText('h1', 'Welcome to Your Vue.js App')
+      .assert.containsText('h1', 'Welcome to Your Vue.utils App')
       .assert.elementCount('img', 1)
       .end()
   }
