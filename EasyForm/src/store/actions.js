@@ -1,8 +1,7 @@
 import axios from 'axios';
 import router from '../router';
 
-axios.defaults.baseURL = 'http://172.22.247.104:8080';
-//axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = 'http://168.168.5.103:8080';
 axios.interceptors.request.use(config => {
     if (config.url.indexOf("login") === -1) {
       config.url += (config.baseURL.indexOf("?") === -1 || config.url.indexOf("?") === -1) ? '?' : '&';
@@ -35,7 +34,6 @@ export default {
   },
   async saveRawPage(context, payload) {
     try {
-      console.log(payload)
       await axios.post('/easyform/saveform', payload);
       return {status: true, message: "保存成功"};
     } catch (e) {

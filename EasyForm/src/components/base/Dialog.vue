@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" v-show="show">
+  <div class="dialog" v-if="showDialog">
     <div>
       <p class="notice">
         <slot></slot>
@@ -14,15 +14,7 @@
     name: "Dialog",
     data() {
       return {
-        timeoutId: null
-      }
-    },
-    computed: {
-      show() {
-        if (this.firstUpdated) {
-          return this.showDialog;
-        }
-        return this.localShow;
+        first: true
       }
     },
     props: {
@@ -35,30 +27,33 @@
       showConfirm: {
         default: true
       },
-      timeout: {
+      time: {
         type: Number
       }
     },
     methods: {
       cancel() {
+        this.$emit("update:showDialog", false);
         this.$emit("cancel");
       },
       confirm() {
+        this.$emit("update:showDialog", false);
         this.$emit("confirm");
+      },
+      timeout() {
+        this.$emit("update:showDialog", false);
+        this.$emit("timeout")
+      }
+    },
+    beforeUpdate() {
+      if (this.time && this.first) {
+        setTimeout(() => {
+          this.timeout();
+        }, this.time * 1000)
       }
     },
     updated() {
-      console.log("updated")
-      if (this.timeout) {
-        setTimeout(() => {
-          console.log("timeout")
-        }, this.timeout * 1000)
-      }
-    },
-    mounted() {
-      console.log("mounted")
-    },
-    beforeDestroy() {
+      this.first = !this.first;
     }
   }
 </script>

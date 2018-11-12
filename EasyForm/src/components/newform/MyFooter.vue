@@ -4,7 +4,7 @@
     <a>发布</a>
     <router-link to="/preview/computer">预览</router-link>
     <Shade v-show="loading"></Shade>
-    <Dialog :showDialog="showDialog" :showCancel="false" :showConfirm="true" :timeout="3" @confirm="dialogConfirm">
+    <Dialog :showDialog.sync="showDialog" :showCancel="false" :showConfirm="false" :time="1.5">
       {{dialogMsg}}
     </Dialog>
   </div>
@@ -33,21 +33,14 @@
       ...mapActions({saveRawPage: "saveRawPage"}),
       save() {
         if (this.components.length >= 0) {
-            // this.loading = true;
-            // let rawPage = this.getRawPage({components: this.components, formSettings: this.formSettings});
-            // this.saveRawPage({rawPage, components: this.components, formSettings: this.formSettings}).then((result) => {
-            // console.log(result)
-            //   this.loading = false;
-            // this.dialogMsg = result.message;
-            // this.dialog = true;
-            // });
-          this.showDialog = true;
+          this.loading = true;
+          let rawPage = this.getRawPage({components: this.components, formSettings: this.formSettings});
+          this.saveRawPage({rawPage, components: this.components, formSettings: this.formSettings}).then((result) => {
+            this.loading = false;
+            this.dialogMsg = result.message;
+            this.showDialog = true;
+          });
         }
-      },
-      dialogConfirm() {
-        this.showDialog = false
-      },
-      dialogTimeOut() {
       }
     },
     components: {
