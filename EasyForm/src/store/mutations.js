@@ -64,21 +64,24 @@ export default {
     state.currentComponent[prop] = value;
   },
   saveUserInfo(state, payload) {
-    let {username, token} = payload;
-    state.userInfo = {username, token};
+    let {username, token, userId} = payload;
+    state.userInfo = {username, token, userId};
     localStorage.setItem("token", token);
     localStorage.setItem("username", username);
+    localStorage.setItem("userId", userId);
   },
   getLocalUserInfo(state) {
     state.userInfo = {
       username: localStorage.getItem("username"),
-      token: localStorage.getItem("token")
+      token: localStorage.getItem("token"),
+      userId: localStorage.getItem("userId")
     }
   },
   safeLoginOut(state) {
     state.userInfo = {};
     localStorage.removeItem("username");
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
   }
 
 }

@@ -22,11 +22,11 @@ axios.interceptors.response.use((response) => {
 export default {
   async login({commit}, {username, password}) {
     try {
-      let {data: {token}} = await axios.post('/login', `username=${username}&password=${password}`);
-      commit("saveUserInfo", {token, username});
+      let {data: {token, userId}} = await axios.post('/login', `username=${username}&password=${password}`);
+      commit("saveUserInfo", {token, userId, username});
       return {status: true, message: "登录成功"}
     } catch (e) {
-      let message = e.message === "Network Error" ? "网络错误" : "用户或密码错误";
+      let message = e.message === "Network Error" ? "网络错误" : "用户名或密码错误";
       return {status: false, message};
     }
 

@@ -81,10 +81,12 @@
     border-radius: 5px;
     box-shadow: 0 0 8px white;
     margin: 5px;
+    text-align: center;
   }
 
   .notice {
     min-height: 60px;
+    line-height: 50px;
     border-bottom: 1px solid silver;
     text-align: center;
     padding-top: 10px;

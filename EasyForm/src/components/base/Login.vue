@@ -16,7 +16,7 @@
       </div>
     </div>
     <Shade v-show="loading"></Shade>
-    <Dialog :showDialog="showDialog" :showCancel="false">
+    <Dialog :showDialog.sync="showDialog" :showCancel="false">
       {{dialogMsg}}
     </Dialog>
   </div>
