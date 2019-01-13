@@ -9,5 +9,5 @@ export default {
   mList: new List(),
   components: [],
   currentComponent: widgets[0],
-
+  formUrl: ''
 }

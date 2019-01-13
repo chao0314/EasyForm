@@ -5,7 +5,7 @@
       <router-link to="/" :class="[{isactive:active.activeNew},'link']" @click.native="change('activeNew')">
         <span>新建表单</span>
       </router-link>
-      <router-link to="" :class="[{isactive:active.activeMy},'link']" @click.native="change('activeMy')">
+      <router-link to="/myform/mycreated" :class="[{isactive:active.activeMy},'link']" @click.native="change('activeMy')">
         <span>我的表单</span>
       </router-link>
       <router-link to="" :class="[{isactive:active.activeTpl},'link']" @click.native="change('activeTpl')">
@@ -23,12 +23,17 @@
     </div>
   </div>
 </template>
-
 <script>
   import {mapState, mapMutations} from 'vuex';
 
   export default {
     name: "MyHeader",
+    props: {
+      defActive: {
+        type: String,
+        default: "activeNew"
+      }
+    },
     data: function () {
       return {
         active: {
@@ -66,6 +71,9 @@
         this.$router.push({path: "/login"});
       }
     },
+    created() {
+      this.change(this.defActive)
+    },
     mounted() {
       let {username, token} = this.userInfo;
       if (username && token) {
@@ -83,8 +91,8 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /*height: 60px;*/
-    height: 10%;
+    height: 60px;
+    /*height: 10%;*/
     background: #35485F;
   }
 

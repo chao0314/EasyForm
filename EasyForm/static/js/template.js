@@ -1,4 +1,3 @@
-/*! art-template@4.13.0 for browser | https://github.com/aui/art-template */
 !function (e, t) {
   "object" == typeof exports && "object" == typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define([], t) : "object" == typeof exports ? exports.template = t() : e.template = t()
 }("undefined" != typeof self ? self : this, function () {

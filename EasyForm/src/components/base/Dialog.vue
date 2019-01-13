@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" v-if="showDialog">
+  <div class="dialog" v-show="showDialog">
     <div>
       <p class="notice">
         <slot></slot>
@@ -51,9 +51,7 @@
           this.timeout();
         }, this.time * 1000)
       }
-    },
-    updated() {
-      this.first = !this.first;
+      this.first = this.first ? false : false;
     }
   }
 </script>
@@ -73,6 +71,7 @@
     align-items: center;
     z-index: 999;
     background: silver;
+    color: #000;
   }
 
   .dialog > div:first-child {

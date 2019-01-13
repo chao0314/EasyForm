@@ -16,7 +16,8 @@ export default {
 
     html {
       font-size: 100px;
-
+      display: flex;
+      justify-content: center;
     }
 
     body {
@@ -117,6 +118,10 @@ export default {
       background: #364760;
       margin-top: 20px;
       line-height: 0.6rem;
+    }
+
+    .footer > div > img {
+      height: 100%;
     }
 
     /*date picker*/
@@ -282,7 +287,7 @@ export default {
 </body>`,
   over: `<script>
   document.addEventListener("DOMContentLoaded", function () {
-      Object.prototype.css = function css(name, value) {
+       Object.prototype.css = function css(name, value) {
         if (value) {
           this.style[name] = value;
           return this;
@@ -295,27 +300,28 @@ export default {
       };
       var $ = document.querySelectorAll.bind(this);
       var $create = document.createElement.bind(this);
+      var html = $("html")[0];
+      var scale = html.clientWidth / 375 > 1.5 ? 1.5 : html.clientWidth / 375;
+      html.style.fontSize = 100 * scale * 0.8 + "px";
+      $("body")[0].style.width = 375 * scale + "px";
+      if (html.clientHeight > html.offsetHeight) {
+        $(".footer")[0].css("position", "fixed").css("bottom", "0").css("width", 375 * scale + "px");
+      }
       var types = ["single", "multi", "radio", "checkbox", "select", "time", "date"];
       var elements = {};
-      var html = $("html")[0];
-      html.style.fontSize = 100 * parseInt(html.clientWidth) / 375 + "px";
-      if (html.clientHeight > html.offsetHeight) {
-        $(".footer")[0].css("position", "fixed").css("bottom", "0").css("width", "100%");
-      }
       createDatePicker(".date_picker");
       for (var i = 0; i < types.length; i++) {
         elements[types[i]] = getArray($(".comp-" + types[i]));
       }
       $(".footer > button")[0].addEventListener("click", function () {
         var answer = getAnswer();
-        console.log(answer);
         if (answer.allin) {
           var that = this;
           this.setAttribute("disabled", "disabled");
           this.css("background", "silver");
           ajax({
             method: "post",
-            url: "--------------",
+            url: "http://168.168.5.103:8080/easyform/saveinstanceresult",
             data: answer,
             success: function () {
               alert("提交成功");
@@ -329,8 +335,6 @@ export default {
         }
 
       });
-
-
       function getArray(like) {
         var result = [];
         for (var i = 0; i < like.length; i++) {
@@ -464,40 +468,57 @@ export default {
       }
 
       function getAnswer() {
-        var answer = {allin: true};
+        var id = window.location.pathname.split("/").pop();
+        var answer = {id, allin: true};
+        var typeValue = {
+          "single": function getSingeleValue(element) {
+            return element.querySelector("input").value;
+          },
+          "multi": function getMultiValue(element) {
+            return element.querySelector("textarea").value;
+          },
+          "radio": function getRadioValue(element) {
+            var radios = element.querySelectorAll("input[type='radio']");
+            for (var i = 0; i < radios.length; i++) {
+              if (radios[i].checked) {
+                return radios[i].value;
+              }
+            }
+            return "";
+          },
+          "checkbox": function getCheckboxValue(element) {
+            var checkboxs = element.querySelectorAll("input[type='checkbox']");
+            var value = [];
+            for (var i = 0; i < checkboxs.length; i++) {
+              if (checkboxs[i].checked) {
+                value.push(checkboxs[i].value);
+              }
+            }
+            return value.join(",");
+          },
+          "select": function getSelectValue(element) {
+            return element.querySelector("select").value;
+          },
+          "time": function getTime(element) {
+            var hour = element.querySelector("input[name='hour']").value;
+            var minute = element.querySelector("input[name='minute']").value;
+            if (!hour || !minute) return "";
+            hour = Number(hour) > 9 ? hour : "0" + hour;
+            minute = Number(minute) > 9 ? minute : "0" + minute;
+            return hour + ":" + minute;
+          },
+          "date": function getDate(element) {
+            return element.querySelector("input").value;
+          }
+        };
         for (var i = 0; i < types.length; i++) {
           answer[types[i]] = {};
         }
         for (var prop in elements) {
           if (elements.hasOwnProperty(prop)) {
             for (var j = 0; j < elements[prop].length; j++) {
-              // if (!answer.allin) break label;
               var element = elements[prop][j];
-              switch (prop) {
-                case "single":
-                  handler(prop, element, getSingeleValue(element));
-                  break;
-                case "multi":
-                  handler(prop, element, getMultiValue(element));
-                  break;
-                case "radio":
-                  handler(prop, element, getRadioValue(element));
-                  break;
-                case "checkbox":
-                  handler(prop, element, getCheckboxValue(element));
-                  break;
-                case "select":
-                  handler(prop, element, getSelectValue(element));
-                  break;
-                case "time":
-                  handler(prop, element, getTime(element));
-                  break;
-                case "date":
-                  handler(prop, element, getDate(element));
-                  break;
-                default:
-                  break;
-              }
+              handler(prop, element, typeValue[prop](element));
             }
           }
         }
@@ -510,59 +531,13 @@ export default {
             answer.allin = false;
             // alert("标红表单不能为空");
           } else {
-           answer[prop][element.getAttribute("data-number")] = {
+            answer[prop][element.getAttribute("data-number")] = {
               title: element.getAttribute("data-title"),
               value: value
             }
 
           }
 
-        }
-
-        function getSingeleValue(element) {
-          return element.querySelector("input").value;
-        }
-
-        function getMultiValue(element) {
-          return element.querySelector("textarea").value;
-        }
-
-        function getRadioValue(element) {
-          var radios = element.querySelectorAll("input[type='radio']");
-          for (var i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-              return radios[i].value;
-            }
-          }
-          return "";
-        }
-
-        function getCheckboxValue(element) {
-          var checkboxs = element.querySelectorAll("input[type='checkbox']");
-          var value = [];
-          for (var i = 0; i < checkboxs.length; i++) {
-            if (checkboxs[i].checked) {
-              value.push(checkboxs[i].value);
-            }
-          }
-          return value.join(",");
-        }
-
-        function getSelectValue(element) {
-          return element.querySelector("select").value;
-        }
-
-        function getTime(element) {
-          var hour = element.querySelector("input[name='hour']").value;
-          var minute = element.querySelector("input[name='minute']").value;
-          if (!hour || !minute) return "";
-          hour = Number(hour) > 9 ? hour : "0" + hour;
-          minute = Number(minute) > 9 ? minute : "0" + minute;
-          return hour + ":" + minute;
-        }
-
-        function getDate(element) {
-          return element.querySelector("input").value;
         }
 
       }
@@ -591,16 +566,29 @@ export default {
         })();
         options.method = (options.method || "get").toLowerCase();
         options.url = options.url + '?rand=' + Math.random();
-        options.data = (function (data) {
-          var arr = [];
-          for (var i in data) {
-            if (data.hasOwnProperty(i)) {
-              arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
-            }
+        // options.data = (function (data) {
+        //   var arr = [];
+        //   for (var i in data) {
+        //     if (data.hasOwnProperty(i)) {
+        //       arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
+        //     }
+        //   }
+        //   return arr.join("&");
+        // })(options.data);
+        if (options.method === 'get') {
+          if (Array.isArray(options.data)) {
+            options.data = (function (data) {
+              var arr = [];
+              for (var i in data) {
+                if (data.hasOwnProperty(i)) {
+                  arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
+                }
+              }
+              return arr.join("&");
+            })(options.data);
           }
-          return arr.join("&");
-        })(options.data);
-        if (options.method === 'get') options.url += (options.url.indexOf('?') === -1 ? '?' + options.data : '&' + options.data);
+          options.url += (options.url.indexOf('?') === -1 ? '?' + options.data : '&' + options.data);
+        }
         options.async = options.async || true;
         if (options.async === true) {
           xhr.onreadystatechange = function () {
@@ -609,10 +597,11 @@ export default {
             }
           }
         }
+        // console.log("method", options.method, "url", options.url, "data", options.data);
         xhr.open(options.method, options.url, options.async);
         if (options.method === "post") {
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          xhr.send(options.data);
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.send(JSON.stringify(options.data));
         } else {
           xhr.send(null);
         }
@@ -626,7 +615,7 @@ export default {
               options.success(xhr.responseText);
             }
 
-          } else if (options.fail && options.fail === 'function') {
+          } else if (options.fail && typeof options.fail === 'function') {
             options.fail(xhr.status);
           }
         }

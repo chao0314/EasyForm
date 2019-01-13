@@ -82,6 +82,10 @@ export default {
     localStorage.removeItem("username");
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
+  },
+  saveFormUrl(state, payload) {
+    state.formUrl = payload.formUrl;
+    console.log(state.formUrl);
   }
 
 }

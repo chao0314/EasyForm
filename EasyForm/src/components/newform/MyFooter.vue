@@ -4,7 +4,8 @@
     <a>发布</a>
     <router-link to="/preview/computer">预览</router-link>
     <Shade v-show="loading"></Shade>
-    <Dialog :showDialog.sync="showDialog" :showCancel="false" :showConfirm="false" :time="1.5">
+    <!--<Dialog :showDialog.sync="showDialog" :showCancel="false" :showConfirm="false" :time="1.5">-->
+    <Dialog :showDialog.sync="showDialog" :showCancel="false">
       {{dialogMsg}}
     </Dialog>
   </div>

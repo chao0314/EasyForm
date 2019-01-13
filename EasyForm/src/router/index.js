@@ -5,6 +5,12 @@ import Preview from '@/components/preview/Preview';
 import Computer from '@/components/preview/Computer';
 import Mobile from '@/components/preview/Mobile';
 import Login from '@/components/base/Login';
+import MyForm from '@/components/myform/MyForm';
+import MyCreated from "@/components/myform/MyCreated";
+import FormDetail from "@/components/myform/FormDetail";
+import Publish from "@/components/myform/Publish";
+import PublisMode from "@/components/myform/PublisMode";
+import OnAndOff from "../components/myform/OnAndOff";
 
 Vue.use(Router);
 const router = new Router({
@@ -29,6 +35,35 @@ const router = new Router({
       name: "login",
       path: "/login",
       component: Login
+    }, {
+      name: "myform",
+      path: "/myform",
+      component: MyForm,
+      children: [{
+        path: "mycreated",
+        name: "MyCreated",
+        component: MyCreated
+      }]
+    }, {
+      path: "/formdetail",
+      name: "FormDetail",
+      component: FormDetail,
+      children: [
+        {
+          name: "Publish",
+          path: "publish",
+          component: Publish,
+          children: [{
+            name: "PublishMode",
+            path: "mode",
+            component: PublisMode
+          },{
+            name: "OnAndOff",
+            path: "enable",
+            component: OnAndOff
+          }]
+        }
+      ]
     }
   ]
 });
