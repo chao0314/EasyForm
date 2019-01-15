@@ -13,10 +13,14 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use((response) => {
   return response;
 }, (error) => {
-  if (error.response && error.response.status === 401 && error.response.config.url.indexOf("login") === -1) {
+  let res = error.response;
+  if (res && res.status === 401 && res.config.url.indexOf("login") === -1) {
     router.push({path: "/login"});
+  } else if (res && res.config.url.indexOf("login") !== -1) {
+    return Promise.reject(error);
+  } else {
+    router.push({path: "/error"});
   }
-  return Promise.reject(error);
 });
 
 export default {
@@ -31,12 +35,24 @@ export default {
     }
   },
   async saveRawPage({commit}, payload) {
-    try {
-      let {data} = await axios.post('/easyform/saveform', payload);
-      commit("saveFormUrl", {formUrl: `${axios.defaults.baseURL}${data}`});
-      return {status: true, message: "保存成功"};
-    } catch (e) {
-      return {status: false, message: "保存失败"};
-    }
+
+    let {data} = await axios.post('/easyform/saveform', payload);
+    commit("saveFormUrl", {formUrl: `${axios.defaults.baseURL}${data}`});
+    return {status: true, message: "保存成功"};
+  },
+  async getFromInstances({state}) {
+    let {data} = await axios.get(`/easyform/getforminstancelist/${state.userInfo.userId}`);
+    let res = [];
+    data.forEach((v) => {
+      let {instanceId, instanceName} = v;
+      res.push({instanceId, instanceName})
+    });
+    return res;
+
+  },
+  async getformUrlById({state}, payload) {
+    // console.log("response", await axios.get(`/easyform/getrawpagebyinstanceid/${payload.id}`))
+    let url = "http://123456789"
+    return url
   }
 }

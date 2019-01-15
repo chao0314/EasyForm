@@ -50,6 +50,7 @@ export default {
   },
   switchCurrent(state, payload) {
     let {component} = payload;
+    console.log("component",component)
     state.currentComponent = component;
     state.mList.iterator(v => {
       v.isCurrent = (v === component);

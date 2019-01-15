@@ -13,6 +13,8 @@
 </template>
 
 <script>
+  import {mapMutations, mapActions} from 'vuex';
+
   export default {
     name: "Publish",
     data() {
@@ -24,6 +26,8 @@
       }
     },
     methods: {
+      ...mapActions({getUrl: "getformUrlById"}),
+      ...mapMutations({saveUrl: "saveFormUrl"}),
       switchStyle(prop) {
         if (!this.active[prop]) {
           for (let p in this.active) {
@@ -35,8 +39,12 @@
         }
       }
     },
+    created() {
+      this.getUrl({id: this.$route.query.id}).then(res => {
+        this.saveUrl({formUrl: res})
+      });
+    },
     mounted() {
-      console.log("mounted")
       for (let prop in this.active) {
         if (this.active.hasOwnProperty(prop) && this.$route.path.match(prop)) {
           this.active[prop] = true;

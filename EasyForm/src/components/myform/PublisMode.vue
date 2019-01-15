@@ -2,7 +2,7 @@
   <div class="mode">
     <div class="link-sharing">
       <div class="link">
-        <span>表单连接</span><input type="text"><a>复制</a><a>访问</a>
+        <span>表单连接</span><input type="text"  readonly><a>复制</a><a>访问</a>
       </div>
       <div class="sharing">
         <span>社交分享</span><a href=""><img
@@ -25,7 +25,7 @@
 
 <script>
   export default {
-    name: "PublisMode"
+    name: "PublisMode",
   }
 </script>
 
@@ -88,9 +88,10 @@
     display: inline-block;
   }
 
-  .sharing>a:nth-child(2){
+  .sharing > a:nth-child(2) {
     margin-left: 28px;
   }
+
   .sharing > a > img {
     vertical-align: middle;
     width: 30px;

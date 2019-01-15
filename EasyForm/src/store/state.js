@@ -5,9 +5,12 @@ import formSettings from "../assets/config/formSettings";
 export default {
   widgets,
   formSettings,
+  urls: {},
+  formUrl: '',
   userInfo: {},
-  mList: new List(),
   components: [],
+  mList: new List(),
   currentComponent: widgets[0],
-  formUrl: ''
+
+
 }

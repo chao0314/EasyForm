@@ -423,6 +423,7 @@
       }
       $(".footer > button")[0].addEventListener("click", function () {
         var answer = getAnswer();
+        console.log("answer",answer)
         if (answer.allin) {
           var that = this;
           this.setAttribute("disabled", "disabled");

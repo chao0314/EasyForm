@@ -10,7 +10,7 @@ export default {
     }
   },
   getComponent: ({components}) => (id) =>
-    components.find(v => parseInt(id) === v.id),
+    components.find(v => parseInt(id) === v.number),
 
   getRawPage: () => (payload) => {
     let {components, formSettings} = payload,

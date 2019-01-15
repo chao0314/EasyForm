@@ -10,11 +10,21 @@ import MyCreated from "@/components/myform/MyCreated";
 import FormDetail from "@/components/myform/FormDetail";
 import Publish from "@/components/myform/Publish";
 import PublisMode from "@/components/myform/PublisMode";
-import OnAndOff from "../components/myform/OnAndOff";
+import OnAndOff from "@/components/myform/OnAndOff";
+import Error from '@/components/base/Error';
 
 Vue.use(Router);
 const router = new Router({
   routes: [
+    {
+      path: "*",
+      component: Error
+    },
+    {
+      path: "/error",
+      name: "error",
+      component: Error
+    },
     {
       path: '/',
       name: 'NewForm',
@@ -57,7 +67,7 @@ const router = new Router({
             name: "PublishMode",
             path: "mode",
             component: PublisMode
-          },{
+          }, {
             name: "OnAndOff",
             path: "enable",
             component: OnAndOff

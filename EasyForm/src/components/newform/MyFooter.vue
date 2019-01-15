@@ -53,8 +53,8 @@
 
 <style scoped>
   .footer {
-    /*position: fixed;*/
-    /*bottom: 0;*/
+    position: fixed;
+    bottom: 0;
     left: 25%;
     right: 25%;
     height: 48px;

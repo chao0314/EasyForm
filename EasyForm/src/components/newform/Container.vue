@@ -46,7 +46,7 @@
         switchCurrent: "switchCurrent"
       }),
       dragstart(comp, ev) {
-        ev.dataTransfer.setData("text/plain", comp.id);
+        ev.dataTransfer.setData("text/plain", comp.number);
 
       },
       drop(comp, ev) {

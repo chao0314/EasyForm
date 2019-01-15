@@ -34,7 +34,7 @@
         type: String,
       },
       formId: {
-        // required: true
+        required: true
       }
     },
     methods: {
@@ -43,8 +43,7 @@
 
       },
       toInstance() {
-        console.log("to instance")
-        this.$router.push({path: "/formdetail/publish/mode"})
+        this.$router.push({path: "/formdetail/publish/mode",query:{id:this.formId}})
       }
     },
     components: {
