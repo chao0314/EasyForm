@@ -40,19 +40,19 @@ export default {
     commit("saveFormUrl", {formUrl: `${axios.defaults.baseURL}${data}`});
     return {status: true, message: "保存成功"};
   },
-  async getFromInstances({state}) {
+  async getFormInstances({state}) {
     let {data} = await axios.get(`/easyform/getforminstancelist/${state.userInfo.userId}`);
     let res = [];
     data.forEach((v) => {
-      let {instanceId, instanceName} = v;
-      res.push({instanceId, instanceName})
+      res.push({instanceId: v.instanceid, instanceName: v.original.instanceName})
     });
     return res;
 
   },
-  async getformUrlById({state}, payload) {
-    // console.log("response", await axios.get(`/easyform/getrawpagebyinstanceid/${payload.id}`))
-    let url = "http://123456789"
-    return url
+  async getInstanceInfoById({commit}, payload) {
+    // console.log((await axios.get(`/easyform/getattributebyinstanceid/${payload.instanceId}`)).data);
+    // console.log((await axios.get(`/easyform/getresultbyinstanceid/${payload.instanceId}`)).data);
+    // let {componment: components, formSettings, publishSettings, url: formUrl} = (await axios.get(`/easyform/getattributebyinstanceid/${payload.instanceId}`)).data;
+    // commit("saveInstanceInfo", {components, formSettings, publishSettings, formUrl:`${axios.defaults.baseURL}${formUrl}`});
   }
 }

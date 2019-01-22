@@ -12,19 +12,11 @@ import Publish from "@/components/myform/Publish";
 import PublisMode from "@/components/myform/PublisMode";
 import OnAndOff from "@/components/myform/OnAndOff";
 import Error from '@/components/base/Error';
+import InstanceData from '@/components/myform/InstanceData';
 
 Vue.use(Router);
 const router = new Router({
   routes: [
-    {
-      path: "*",
-      component: Error
-    },
-    {
-      path: "/error",
-      name: "error",
-      component: Error
-    },
     {
       path: '/',
       name: 'NewForm',
@@ -72,9 +64,24 @@ const router = new Router({
             path: "enable",
             component: OnAndOff
           }]
+        },
+        {
+          name: "instanceData",
+          path: "data",
+          component: InstanceData
         }
       ]
+    },
+    {
+      path: "/error",
+      name: "error",
+      component: Error
+    },
+    {
+      path: "*",
+      redirect: "/error"
     }
+
   ]
 });
 router.beforeEach((to, form, next) => {

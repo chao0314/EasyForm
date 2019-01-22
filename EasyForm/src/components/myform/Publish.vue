@@ -1,11 +1,9 @@
 <template>
   <div class="publish">
     <div class="menu">
-      <router-link to="/formdetail/publish/mode" :class="['link',{active:active.mode}]"
-                   @click.native="switchStyle('mode')">发布方式
+      <router-link to="/formdetail/publish/mode" class="link" active-class="active">发布方式
       </router-link>
-      <router-link to="/formdetail/publish/enable" :class="['link',{active:active.enable}]"
-                   @click.native="switchStyle('enable')">启停表单
+      <router-link to="/formdetail/publish/enable" class="link" active-class="active">启停表单
       </router-link>
     </div>
     <router-view class="panel"></router-view>
@@ -16,42 +14,7 @@
   import {mapMutations, mapActions} from 'vuex';
 
   export default {
-    name: "Publish",
-    data() {
-      return {
-        active: {
-          mode: false,
-          enable: false
-        }
-      }
-    },
-    methods: {
-      ...mapActions({getUrl: "getformUrlById"}),
-      ...mapMutations({saveUrl: "saveFormUrl"}),
-      switchStyle(prop) {
-        if (!this.active[prop]) {
-          for (let p in this.active) {
-            if (this.active.hasOwnProperty(p)) {
-              this.active[p] = false;
-            }
-          }
-          this.active[prop] = true;
-        }
-      }
-    },
-    created() {
-      this.getUrl({id: this.$route.query.id}).then(res => {
-        this.saveUrl({formUrl: res})
-      });
-    },
-    mounted() {
-      for (let prop in this.active) {
-        if (this.active.hasOwnProperty(prop) && this.$route.path.match(prop)) {
-          this.active[prop] = true;
-        }
-      }
-
-    }
+    name: "Publish"
   }
 </script>
 

@@ -2,38 +2,17 @@
   <div class="detail_nav">
     <p>表单详情</p>
     <div class="nav">
-      <router-link to="/formdetail/publish/mode" :class="['link',{active:active.isPublish}]" @click.native="switchStyle('isPublish')">发布
+      <router-link to="/formdetail/publish/mode" class="link" active-class="active">发布
       </router-link>
-      <router-link to="" :class="['link',{active:active.isData}]" @click.native="switchStyle('isData')">数据</router-link>
-      <router-link to="" :class="['link',{active:active.isEdit}]" @click.native="switchStyle('isEdit')">编辑</router-link>
+      <router-link to="/formdetail/data" class="link" active-class="active">数据</router-link>
+      <router-link to="/formdetail/edit" class="link" active-class="active">编辑</router-link>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "DetailNav",
-    data() {
-      return {
-        active: {
-          isPublish: true,
-          isData: false,
-          isEdit: false
-        }
-      }
-    },
-    methods: {
-      switchStyle(prop) {
-        if (!this.active[prop]) {
-          for (let p in this.active) {
-            if (this.active.hasOwnProperty(p)) {
-              this.active[p] = false;
-            }
-          }
-          this.active[prop] = true;
-        }
-      }
-    }
+    name: "DetailNav"
   }
 </script>
 

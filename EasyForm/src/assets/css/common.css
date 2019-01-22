@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
@@ -6,11 +6,18 @@
   box-sizing: border-box;
   font-size: 12px;
 }
-html{
+
+html {
   font-size: 100px;
   height: 100%;
 }
-body{
+
+body {
   font-size: 16px;
   height: 100%;
+}
+
+.is-active {
+  border-bottom: 2px solid #5990CF;
+  color: #5990CF;
 }

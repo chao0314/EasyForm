@@ -1,10 +1,8 @@
 <template>
   <div class="checkbox">
     <input type="checkbox" :id="id" class="btn-checkbox" :checked="checked" :disabled="disabled"
-           @change="$emit('change',$event.target.checked)">
-    <label :for="id"><span>{{message}}</span></label>
+           @change="$emit('change',$event.target.checked)"><label :for="id"><span>{{message}}</span></label>
   </div>
-
 </template>
 
 <script>
@@ -15,11 +13,11 @@
         required: true
       },
       message: {
-        required: true
+        default: ""
       },
       checked: {
         default: false,
-        type: Boolean
+        // type: Boolean
       },
       disabled: {
         default: false
@@ -35,16 +33,22 @@
 <style scoped>
   .checkbox {
     display: inline-block;
+    /*display: flex;*/
+    /*justify-content: flex-start;*/
+    /*align-items: center;*/
+    /*background: pink;*/
+
   }
 
   input[class*="btn-checkbox"] + label:before {
     display: inline-block;
     content: '';
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
     border: 1px solid silver;
-    line-height: 10px;
-    vertical-align:middle;
+    line-height: 11px;
+    vertical-align: middle;
+    /*background: #000;*/
   }
 
   input[class*="btn-checkbox"]:checked + label:before {
@@ -63,6 +67,4 @@
     clip: rect(0, 0, 0, 0);
   }
 
-  .checkbox span {
-  }
 </style>

@@ -33,17 +33,16 @@
         default: "新的表单",
         type: String,
       },
-      formId: {
+      instanceId: {
         required: true
       }
     },
     methods: {
       del() {
         console.log("del instance")
-
       },
       toInstance() {
-        this.$router.push({path: "/formdetail/publish/mode",query:{id:this.formId}})
+        this.$router.push({path: "/formdetail/publish/mode", query: {instanceId: this.instanceId}})
       }
     },
     components: {

@@ -1,7 +1,7 @@
 <template>
   <div class="mycreated">
     <div class="list">
-      <FormIns v-for="v in instances" :key="v.instanceId" :title="v.instanceName" :formId="v.instanceId"></FormIns>
+      <FormIns v-for="v in instances" :key="v.instanceId" :title="v.instanceName" :instanceId="v.instanceId"></FormIns>
     </div>
 
   </div>
@@ -20,14 +20,13 @@
     },
     methods: {
       ...mapActions({
-        "getInstances": "getFromInstances"
+        "getInstances": "getFormInstances"
       })
     },
     components: {
       FormIns
     },
     created() {
-      console.log("mycreated created");
       this.getInstances().then((res) => {
         this.instances = res;
       });

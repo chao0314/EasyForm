@@ -20,5 +20,10 @@ export default {
     });
     rawPage = `${rawPage}${fragments["footer"]}${fragments["over"]}`;
     return rawPage;
+  },
+  getInstanceResultTile({instanceResult}) {
+    return instanceResult.components.map(({name}) => {
+      return {name};
+    })
   }
 }
