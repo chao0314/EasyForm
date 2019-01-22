@@ -1,6 +1,6 @@
 <template>
     <div class="instance-data">
-      <check-box-list :list-length="10"></check-box-list>
+      <check-box-list :list ="[-1,1,2,3,4]"></check-box-list>
       <!--<header>-->
         <!--<instance-data-item id="all" :message="getInstanceResultTile"></instance-data-item>-->
       <!--</header>-->

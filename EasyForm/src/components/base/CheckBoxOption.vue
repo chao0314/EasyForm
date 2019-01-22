@@ -1,7 +1,8 @@
 <template>
   <div class="checkbox">
-    <input type="checkbox" :id="id" class="btn-checkbox" :checked="checked" :disabled="disabled"
-           @change="$emit('change',$event.target.checked)"><label :for="id"><span>{{message}}</span></label>
+    <input type="checkbox" :id="prefix + id" class="btn-checkbox" :checked="checked" :disabled="disabled"
+           @change="$emit('change',$event.target.checked)" :data-number="id"><label
+    :for="prefix + id"><span v-if="message">{{message}}</span></label>
   </div>
 </template>
 
@@ -21,11 +22,15 @@
       },
       disabled: {
         default: false
+      },
+      prefix: {
+        default: ""
       }
     },
     model: {
       prop: "checked",
-      event: "change"
+      event:
+        "change"
     }
   }
 </script>
@@ -43,10 +48,10 @@
   input[class*="btn-checkbox"] + label:before {
     display: inline-block;
     content: '';
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
     border: 1px solid silver;
-    line-height: 11px;
+    line-height: 10px;
     vertical-align: middle;
     /*background: #000;*/
   }

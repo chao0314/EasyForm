@@ -1,7 +1,9 @@
 <template>
-  <div class="check-box-list" @change="selectHanle(value,e)">
-    <check-box-option v-for="v in listLength" :key="v" :id="v | formatId" :data-number="v"></check-box-option>
-  </div>
+  <ul class="check-box-list" @change="selectHanle">
+    <li v-for="v in list" :key="v">
+      <check-box-option :id="v" prefix="instance-data-"></check-box-option>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -9,22 +11,15 @@
 
   export default {
     name: "CheckBoxList",
-    filters: {
-      formatId(value) {
-        return `instance-data-${value}`;
-      }
-    },
+
     methods: {
-      selectHanle(v, e) {
-        console.log("select", v, e);
+      selectHanle(e) {
+        console.log("select", e.target.checked, e.target.getAttribute("data-number"));
       }
     },
     props: {
-      listLength: {
+      list: {
         required: true
-      },
-      prefix: {
-        default: "instance-data-"
       }
     },
     components: {
@@ -34,9 +29,23 @@
 </script>
 
 <style scoped>
-  .check-box-list{
-    display: flex;
-    flex-direction: column;
+  .check-box-list {
+    list-style-type: none;
   }
+
+  .check-box-list > li {
+    width: 32px;
+    height: 28px;
+    border: 1px solid silver;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  .check-box-list > li:first-child {
+    margin-top: 0;
+  }
+
 
 </style>
